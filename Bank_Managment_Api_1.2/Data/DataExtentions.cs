@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bank_Managment_API.Data;
+namespace Bank_Managment_Api_1._2.Data;
 
 public static class DataExtentions
 {

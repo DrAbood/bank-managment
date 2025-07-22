@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Bank_Managment_API.Entities;
+namespace Bank_Managment_Api_1._2.Entities;
 
 public class Deposit
 {

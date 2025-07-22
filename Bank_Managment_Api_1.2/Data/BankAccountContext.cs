@@ -1,12 +1,14 @@
 using System;
-using Bank_Managment_API.Dto;
-using Bank_Managment_API.Entities;
+using Bank_Managment_Api_1._2.Dto;
+using Bank_Managment_Api_1._2.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bank_Managment_API.Data;
+namespace Bank_Managment_Api_1._2.Data;
 
 public class BankAccountContext(DbContextOptions<BankAccountContext> options) : DbContext(options)
 {
+
+
     public DbSet<BankAccount> bankaccount => Set<BankAccount>();
     public DbSet<Deposit> deposits => Set<Deposit>();
     public DbSet<Withdraw> withdraws => Set<Withdraw>();
@@ -17,7 +19,7 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
             new
             {
                 // Id = 1,
-                Number = "2507150000",
+                BankNumber = "2507220000",
                 HolderName = "Abdulrahman",
                 AssociatedPhoneNumber = "50221482",
                 Balance = 150.4569m,

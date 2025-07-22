@@ -1,13 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bank_Managment_API.Entities;
+namespace Bank_Managment_Api_1._2.Entities;
 
 public class BankAccount
 {
     // public int Id { get; set; }
     [Key]
-    public required string Number { get; set; }
+    public required string BankNumber { get; set; }
 
     public required string HolderName { get; set; }
     public required string AssociatedPhoneNumber { get; set; }
@@ -18,5 +18,5 @@ public class BankAccount
 
     public DateTime CreationDate { get; set; }
 
-    public DateTime DateOfBirth { get; set; }    
+    public DateTime DateOfBirth { get; set; }
 }
