@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bank_Managment_Api_1.2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32a734d13076e3eee3cc7a98cc0f3cebc8dc272b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b29b3a233ec91a5636c3e87c0de685e11c184d2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bank_Managment_Api_1.2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bank_Managment_Api_1.2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
