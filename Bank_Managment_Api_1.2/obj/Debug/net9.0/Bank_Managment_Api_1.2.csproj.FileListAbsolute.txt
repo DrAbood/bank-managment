@@ -293,3 +293,16 @@ C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment 
 C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\Namotion.Reflection.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NJsonSchema.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NJsonSchema.Annotations.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NJsonSchema.NewtonsoftJson.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NJsonSchema.Yaml.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NSwag.Annotations.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NSwag.AspNetCore.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NSwag.Core.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NSwag.Core.Yaml.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NSwag.Generation.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\NSwag.Generation.AspNetCore.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\bin\Debug\net9.0\YamlDotNet.dll
+C:\Users\Dr_Abood\Desktop\vscode\Bank Account Managment API (A1)\Bank Managment API\Bank_Managment_Api_1.2\obj\Debug\net9.0\Bank_Managment_Api_1.2.MvcApplicationPartsAssemblyInfo.cs

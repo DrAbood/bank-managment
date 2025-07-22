@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 //There is an error here solve it 
 var connString = builder.Configuration.GetConnectionString("BankAccount");
 builder.Services.AddSqlite<BankAccountContext>(connString);
+
 var app = builder.Build();
 
 app.MapBankAccountEndpoints();

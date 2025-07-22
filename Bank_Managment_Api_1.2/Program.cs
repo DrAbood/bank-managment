@@ -12,14 +12,23 @@ builder.Services.AddControllers();
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var connString = builder.Configuration.GetConnectionString("BankAccount");
 builder.Services.AddSqlite<BankAccountContext>(connString);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
 app.MigrateDb();
-// app.UseHttpsRedirection();
-
-// app.UseAuthorization();
 
 
 
