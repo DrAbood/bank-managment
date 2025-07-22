@@ -74,6 +74,51 @@ public class AccountController : ControllerBase
     }
 
 
+    [HttpPost("{number}/Deposit")]
+    public async Task<ActionResult> PostDeposit(string number, Create_DepositDto NewDeposit)
+    {
+        var existingAcount = await _dbContext.bankaccount.FindAsync(number);
+
+
+        if (existingAcount is null)
+        {
+            return NotFound();
+        }
+        Deposit deposit = NewDeposit.ToEntityFromDeposit(number: number);
+        _dbContext.deposits.Add(deposit);
+
+        await _dbContext.SaveChangesAsync();
+
+        existingAcount.Balance = existingAcount.Balance + deposit.Balance;
+
+        await _dbContext.SaveChangesAsync();
+
+        return NoContent();
+        
+    }
+    [HttpPost("{number}/Withdraw")]
+    public async Task<ActionResult> PostWithdraw(string number, Create_WithdrawDto NewWithdraw)
+    {
+        var existingAcount = await _dbContext.bankaccount.FindAsync(number);
+
+
+        if (existingAcount is null)
+        {
+            return NotFound();
+        }
+        Withdraw withdraw = NewWithdraw.ToEntityFromWithdraw(number: number);
+        _dbContext.withdraws.Add(withdraw);
+
+        await _dbContext.SaveChangesAsync();
+
+        existingAcount.Balance = existingAcount.Balance - withdraw.Balance;
+
+        await _dbContext.SaveChangesAsync();
+
+        return NoContent();
+        }
+
+
 
     public static async Task<string> GenerateAccountNumber(BankAccountContext db)
     {
@@ -93,6 +138,6 @@ public class AccountController : ControllerBase
             nextSequence = int.Parse(lastSeqStr) + 1;
         }
 
-        return $"{todayPrefix}{nextSequence.ToString("D5")}";
+        return $"{todayPrefix}{nextSequence.ToString("D4")}";
     }
 }
