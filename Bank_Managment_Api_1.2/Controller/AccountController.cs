@@ -56,7 +56,22 @@ public class AccountController : ControllerBase
             new { number = account.BankNumber },
             account.ToAccountDetailsDto());
     }
-            
+
+
+    [HttpPatch("{number}")]
+    public async Task<ActionResult> PatchAccount(string number, UpdateAccountDto updatedAccount)
+    {
+        var existingAcount = await _dbContext.bankaccount.FindAsync(number);
+        if (existingAcount is null)
+        {
+            return NotFound();
+        }
+        if (updatedAccount.HolderName != null) existingAcount.HolderName = updatedAccount.HolderName;
+        if (updatedAccount.AssociatedPhoneNumber != null) existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
+        await _dbContext.SaveChangesAsync();
+        return NoContent();
+        
+    }
 
 
 
