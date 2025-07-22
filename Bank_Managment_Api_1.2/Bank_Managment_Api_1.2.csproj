@@ -7,4 +7,8 @@
     <RootNamespace>Bank_Managment_Api_1._2</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Dto\" />
+  </ItemGroup>
+
 </Project>
