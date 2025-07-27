@@ -4,6 +4,8 @@ using Bank_Managment_Api_1._2.Data;
 using Bank_Managment_Api_1._2.Dto;
 using Bank_Managment_Api_1._2.Entities;
 using Bank_Managment_Api_1._2.Mapping;
+// using Bank_Managment_Api_1._2.Module.BankManagmentModule;
+using Bank_Managment_Api_1._2.Helpfullclasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,12 +16,18 @@ namespace Bank_Managment_Api_1._2.Controller;
 
 public class AccountController : ControllerBase
 {
+    // private readonly IBankManagementFunctions _BankMangmentfunction;
     private BankAccountContext _dbContext;
 
     public AccountController(BankAccountContext dbContext)
     {
         _dbContext = dbContext;
     }
+
+    // public AccountController(IBankManagementFunctions bankMangmentfunction)
+    // {
+    //     _BankMangmentfunction = bankMangmentfunction;
+    // }
     [HttpGet("{number}")]
     public async Task<ActionResult<AccountSummaryDto>> GetAccount(string number)
     {
@@ -29,12 +37,14 @@ public class AccountController : ControllerBase
             return NotFound();
         }
         return account.ToAccountSummaryDto();
+        
+
     }
 
     [HttpPost]
     public async Task<ActionResult<AccountDetailsDto>> PostAccount(CreateAccountDto newAccount)
     {
-        string Generatednumber = await GenerateAccountNumber(_dbContext);
+        string Generatednumber = await HelpfulFunctions.GenerateAccountNumber(_dbContext);
         // var account = new BankAccount
         // {
         //     // DateTime.Now.ToString("yyMMdd") + accounts.Count.ToString("D4"),
@@ -120,24 +130,24 @@ public class AccountController : ControllerBase
 
 
 
-    public static async Task<string> GenerateAccountNumber(BankAccountContext db)
-    {
-        var todayPrefix = DateTime.Now.ToString("yyMMdd");
+    // public static async Task<string> GenerateAccountNumber(BankAccountContext db)
+    // {
+    //     var todayPrefix = DateTime.Now.ToString("yyMMdd");
 
-        var maxTodayNumber = await db.bankaccount
-            .Where(a => a.BankNumber.StartsWith(todayPrefix))
-            .OrderByDescending(a => a.BankNumber)
-            .Select(a => a.BankNumber)
-            .FirstOrDefaultAsync();
+    //     var maxTodayNumber = await db.bankaccount
+    //         .Where(a => a.BankNumber.StartsWith(todayPrefix))
+    //         .OrderByDescending(a => a.BankNumber)
+    //         .Select(a => a.BankNumber)
+    //         .FirstOrDefaultAsync();
 
-        int nextSequence = 1;
+    //     int nextSequence = 1;
 
-        if (!string.IsNullOrEmpty(maxTodayNumber))
-        {
-            var lastSeqStr = maxTodayNumber.Substring(6);
-            nextSequence = int.Parse(lastSeqStr) + 1;
-        }
+    //     if (!string.IsNullOrEmpty(maxTodayNumber))
+    //     {
+    //         var lastSeqStr = maxTodayNumber.Substring(6);
+    //         nextSequence = int.Parse(lastSeqStr) + 1;
+    //     }
 
-        return $"{todayPrefix}{nextSequence.ToString("D4")}";
-    }
+    //     return $"{todayPrefix}{nextSequence.ToString("D4")}";
+    // }
 }

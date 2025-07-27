@@ -1,5 +1,6 @@
 using Bank_Managment_Api_1._2.Data;
 using Bank_Managment_Api_1._2.Entities;
+// using Bank_Managment_Api_1._2.Module.BankManagmentModule;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,6 +15,7 @@ var connString = builder.Configuration.GetConnectionString("BankAccount");
 builder.Services.AddSqlite<BankAccountContext>(connString);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// builder.Services.AddScoped<IBankManagementFunctions,BankManagmentFunctions>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
