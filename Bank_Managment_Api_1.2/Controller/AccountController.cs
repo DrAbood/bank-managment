@@ -76,8 +76,8 @@ public class AccountController : ControllerBase
         {
             return NotFound();
         }
-        if (updatedAccount.HolderName != null) existingAcount.HolderName = updatedAccount.HolderName;
-        if (updatedAccount.AssociatedPhoneNumber != null) existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
+        if (updatedAccount.HolderName != null && updatedAccount.HolderName != "string") existingAcount.HolderName = updatedAccount.HolderName;
+        if (updatedAccount.AssociatedPhoneNumber != null && updatedAccount.AssociatedPhoneNumber != "string") existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
         await _dbContext.SaveChangesAsync();
         return NoContent();
         
