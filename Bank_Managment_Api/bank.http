@@ -1,0 +1,39 @@
+###
+GET http://localhost:5217/Account/25072000003
+###
+POST http://localhost:5217/account
+Content-Type: application/json
+
+{
+    "HolderName": "test person 5",
+    "AssociatedPhoneNumber": "5477869",
+    "IsActive": true,
+    "Balance": 110.25,
+    "DateOfBirth": "2001-07-18"
+}
+###
+PUT http://localhost:5217/Account/25072200001
+Content-Type:  application/json
+
+{
+    "HolderName": "ahmed",
+    "AssociatedPhoneNumber": "8521186479853"
+}
+
+###
+
+POST http://localhost:5217/Account/25072200001/Deposit
+Content-Type: application/json
+
+{
+    "Balance": 50
+}
+###
+POST http://localhost:5217/Account/25072200001/Withdraw
+Content-Type: application/json
+
+{
+    "Balance": 5
+}
+
+
