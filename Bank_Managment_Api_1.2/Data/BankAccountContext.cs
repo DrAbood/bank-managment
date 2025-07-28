@@ -39,18 +39,18 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
         modelBuilder.Entity<Role>().HasData(
             new
             {
-                id = 1,
+                Id = 1,
                 RoleName = "Customer"
             },
             new
 
             {
-                id = 2,
+                Id = 2,
                 RoleName = "Teller"
             },
             new
             {
-                id = 3,
+                Id = 3,
                 RoleName = "Admin"
             }
         );
