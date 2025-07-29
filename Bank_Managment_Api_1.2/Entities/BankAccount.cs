@@ -22,12 +22,12 @@ public class BankAccount
 
     public DateTime DateOfBirth { get; set; }
 
-    public int CategoryID { get; set; }
+    public required int CategoryID { get; set; }
 
     [ForeignKey("CategoryID")]
-    public Category category { get; set; }
-    public int UserID { get; set; }
+    public Category? category { get; set; }
+    public required int UserID { get; set; }
 
     [ForeignKey("UserID")]
-    public User user{ get; set; }
+    public User? user{ get; set; }
 }

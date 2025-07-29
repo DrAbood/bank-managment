@@ -19,6 +19,12 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
 
     public DbSet<Category> categories => Set<Category>();
 
+    public DbSet<Transaction> transactions=> Set<Transaction>();
+
+    public DbSet<TransactionStatus> transactionsstatus => Set<TransactionStatus>();
+
+    public DbSet<TransactionType> transactiontypes => Set<TransactionType>();
+
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {
     //     modelBuilder.Entity<BankAccount>().HasData(
@@ -71,6 +77,45 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
             {
                 Id = 3,
                 CategoryName = "Regular"
+            }
+        );
+        modelBuilder.Entity<TransactionType>().HasData(
+            new
+            {
+                Id = 1,
+                Type = "Deposit"
+            },
+            new
+            {
+                Id = 2,
+                Type = "Withdraw"
+            }
+        );
+        modelBuilder.Entity<TransactionStatus>().HasData(
+            new
+            {
+                Id = 1,
+                Status = "Pending"
+            },
+            new
+            {
+                Id = 2,
+                Status = "Completed"
+            },
+            new
+            {
+                Id = 3,
+                Status = "Failed"
+            },
+            new
+            {
+                Id = 4,
+                Status = "Cancelled"
+            },
+            new
+            {
+                Id = 5,
+                Status = "Processing"
             }
         );
     }

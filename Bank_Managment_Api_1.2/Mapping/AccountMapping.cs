@@ -25,26 +25,26 @@ public static class AccountMapping
             CategoryID = Account.CategoryId
         };
     }
-    public static BankAccount ToEntity(this UpdateAccountDto Account,
-    string Number,
-    decimal balance,
-    DateTime creationDate,
-    DateTime DateOfBirth,
-    bool IsActive
-    )
-    {
-        return new BankAccount()
-        {
-            BankNumber = Number,
-            // DateTime.Now.ToString("yyMMdd") + dbContext.bankaccount.Count.ToString("D4"),
-            HolderName = Account.HolderName,
-            AssociatedPhoneNumber = Account.AssociatedPhoneNumber,
-            Balance = balance,
-            CreationDate = creationDate,
-            DateOfBirth = DateOfBirth,
-            IsActive = IsActive
-        };
-    }
+    // public static BankAccount ToEntity(this UpdateAccountDto Account,
+    // string Number,
+    // decimal balance,
+    // DateTime creationDate,
+    // DateTime DateOfBirth,
+    // bool IsActive
+    // )
+    // {
+    //     return new BankAccount()
+    //     {
+    //         BankNumber = Number,
+    //         // DateTime.Now.ToString("yyMMdd") + dbContext.bankaccount.Count.ToString("D4"),
+    //         HolderName = Account.HolderName,
+    //         AssociatedPhoneNumber = Account.AssociatedPhoneNumber,
+    //         Balance = balance,
+    //         CreationDate = creationDate,
+    //         DateOfBirth = DateOfBirth,
+    //         IsActive = IsActive
+    //     };
+    // }
     public static AccountDetailsDto ToAccountDetailsDto(this BankAccount Account)
     {
         return new(
