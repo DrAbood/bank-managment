@@ -17,6 +17,8 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
 
     public DbSet<Role> roles => Set<Role>();
 
+    public DbSet<Category> categories => Set<Category>();
+
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {
     //     modelBuilder.Entity<BankAccount>().HasData(
@@ -52,6 +54,23 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
             {
                 Id = 3,
                 RoleName = "Admin"
+            }
+        );
+        modelBuilder.Entity<Category>().HasData(
+            new
+            {
+                Id = 1,
+                CategoryName = "VIP"
+            },
+            new
+            {
+                Id = 2,
+                CategoryName = "Premium"
+            },
+            new
+            {
+                Id = 3,
+                CategoryName = "Regular"
             }
         );
     }

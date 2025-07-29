@@ -1,5 +1,7 @@
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bank_Managment_Api_1._2.Entities;
 
@@ -19,4 +21,13 @@ public class BankAccount
     public DateTime CreationDate { get; set; }
 
     public DateTime DateOfBirth { get; set; }
+
+    public int CategoryID { get; set; }
+
+    [ForeignKey("CategoryID")]
+    public Category category { get; set; }
+    public int UserID { get; set; }
+
+    [ForeignKey("UserID")]
+    public User user{ get; set; }
 }

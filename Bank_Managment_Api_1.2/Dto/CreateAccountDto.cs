@@ -9,5 +9,9 @@ public record class CreateAccountDto
     decimal Balance,
     [MinAge(18)]
     DateTime DateOfBirth,
+    int CategoryId,
+    int UserId,
     bool IsActive = true
+    
+    
 );

@@ -20,7 +20,6 @@ public class User
 
     public string? MobileNumber { get; set; }
 
-    [ForeignKey("Role")]
     public required string Role { get; set; }
     
     public required string HashedPassword { get; set; }

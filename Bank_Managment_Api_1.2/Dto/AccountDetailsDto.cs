@@ -11,7 +11,8 @@ public record class AccountDetailsDto
     decimal Balance,
     DateTime CreationDate,
     DateTime DateOfBirth,
-    bool IsActive = true
-
+    bool IsActive,
+    int UserId,
+    int CategoryId
 );
 

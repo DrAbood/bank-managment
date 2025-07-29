@@ -20,7 +20,9 @@ public static class AccountMapping
             Balance = Account.Balance,
             CreationDate = DateTime.Now.Date,
             DateOfBirth = Account.DateOfBirth,
-            IsActive = Account.IsActive
+            IsActive = Account.IsActive,
+            UserID = Account.UserId,
+            CategoryID = Account.CategoryId
         };
     }
     public static BankAccount ToEntity(this UpdateAccountDto Account,
@@ -52,7 +54,9 @@ public static class AccountMapping
             Account.Balance,
             Account.CreationDate,
             Account.DateOfBirth,
-            Account.IsActive
+            Account.IsActive,
+            Account.UserID,
+            Account.CategoryID
         );
     }
 

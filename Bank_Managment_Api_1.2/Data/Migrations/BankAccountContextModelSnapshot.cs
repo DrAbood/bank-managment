@@ -29,6 +29,9 @@ namespace Bank_Managment_Api_1._2.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
@@ -42,9 +45,48 @@ namespace Bank_Managment_Api_1._2.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("BankNumber");
 
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("UserID");
+
                     b.ToTable("bankaccount");
+                });
+
+            modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryName = "VIP"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryName = "Premium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryName = "Regular"
+                        });
                 });
 
             modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.Deposit", b =>
@@ -148,6 +190,25 @@ namespace Bank_Managment_Api_1._2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("withdraws");
+                });
+
+            modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.BankAccount", b =>
+                {
+                    b.HasOne("Bank_Managment_Api_1._2.Entities.Category", "category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bank_Managment_Api_1._2.Entities.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("category");
+
+                    b.Navigation("user");
                 });
 #pragma warning restore 612, 618
         }

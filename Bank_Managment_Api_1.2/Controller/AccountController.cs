@@ -56,11 +56,23 @@ public class AccountController : ControllerBase
         //     DateOfBirth = newAccount.DateOfBirth,
         //     IsActive = newAccount.IsActive
         // };
+        var User = _dbContext.users.Find(newAccount.UserId);
+        if (User == null)
+        {
+            return BadRequest("userId doesn't exist");
+        }
+        if (User.Role != "Customer")
+        {
+            return BadRequest("The User is Not a Customer");
+        }
         BankAccount account = newAccount.ToEntity(Generatednumber);
+        // if (account.user == null)
+        // {
+        //     return BadRequest("account is null");
+        // }
 
         _dbContext.bankaccount.Add(account);
         await _dbContext.SaveChangesAsync();
-        
         return CreatedAtAction(
             nameof(GetAccount),
             new { number = account.BankNumber },
