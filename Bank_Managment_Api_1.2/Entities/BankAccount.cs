@@ -2,13 +2,16 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bank_Managment_Api_1._2.Entities;
 
+[Table("bankaccount")]
 public class BankAccount
 {
-    // public int Id { get; set; }
     [Key]
+    public int Id { get; set; }
+
     public required string BankNumber { get; set; }
 
     public required string HolderName { get; set; }
@@ -29,5 +32,5 @@ public class BankAccount
     public required int UserID { get; set; }
 
     [ForeignKey("UserID")]
-    public User? user{ get; set; }
+    public User? user { get; set; }
 }

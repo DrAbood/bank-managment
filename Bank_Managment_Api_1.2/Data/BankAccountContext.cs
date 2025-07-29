@@ -19,7 +19,7 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
 
     public DbSet<Category> categories => Set<Category>();
 
-    public DbSet<Transaction> transactions=> Set<Transaction>();
+    public DbSet<Transactions> transactions=> Set<Transactions>();
 
     public DbSet<TransactionStatus> transactionsstatus => Set<TransactionStatus>();
 

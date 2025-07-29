@@ -19,14 +19,19 @@ namespace Bank_Managment_Api_1._2.Migrations
 
             modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.BankAccount", b =>
                 {
-                    b.Property<string>("BankNumber")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AssociatedPhoneNumber")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Balance")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("BankNumber")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CategoryID")
@@ -48,7 +53,7 @@ namespace Bank_Managment_Api_1._2.Migrations
                     b.Property<int>("UserID")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("BankNumber");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryID");
 
@@ -139,45 +144,6 @@ namespace Bank_Managment_Api_1._2.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.Transaction", b =>
-                {
-                    b.Property<int>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BankAccoutnId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Beneficiary")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("StatusId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("TransactionAmount")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("TransactionTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("bankAccountBankNumber")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TransactionId");
-
-                    b.HasIndex("StatusId");
-
-                    b.HasIndex("TransactionTypeId");
-
-                    b.HasIndex("bankAccountBankNumber");
-
-                    b.ToTable("transactions");
-                });
-
             modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.TransactionStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -245,6 +211,42 @@ namespace Bank_Managment_Api_1._2.Migrations
                             Id = 2,
                             Type = "Withdraw"
                         });
+                });
+
+            modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.Transactions", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("BankAccountId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Beneficiary")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("TransactionAmount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankAccountId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("TransactionTypeId");
+
+                    b.ToTable("transactions");
                 });
 
             modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.User", b =>
@@ -319,8 +321,14 @@ namespace Bank_Managment_Api_1._2.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.Transaction", b =>
+            modelBuilder.Entity("Bank_Managment_Api_1._2.Entities.Transactions", b =>
                 {
+                    b.HasOne("Bank_Managment_Api_1._2.Entities.BankAccount", "bankAccount")
+                        .WithMany()
+                        .HasForeignKey("BankAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Bank_Managment_Api_1._2.Entities.TransactionStatus", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
@@ -332,10 +340,6 @@ namespace Bank_Managment_Api_1._2.Migrations
                         .HasForeignKey("TransactionTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Bank_Managment_Api_1._2.Entities.BankAccount", "bankAccount")
-                        .WithMany()
-                        .HasForeignKey("bankAccountBankNumber");
 
                     b.Navigation("Status");
 

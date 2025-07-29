@@ -31,13 +31,13 @@ public class AccountController : ControllerBase
     [HttpGet("{number}")]
     public async Task<ActionResult<AccountSummaryDto>> GetAccount(string number)
     {
-        BankAccount? account = await _dbContext.bankaccount.FindAsync(number);
+        BankAccount? account = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
         if (account == null)
         {
             return NotFound();
         }
         return account.ToAccountSummaryDto();
-        
+
 
     }
 
@@ -83,7 +83,7 @@ public class AccountController : ControllerBase
     [HttpPatch("{number}")]
     public async Task<ActionResult> PatchAccount(string number, UpdateAccountDto updatedAccount)
     {
-        var existingAcount = await _dbContext.bankaccount.FindAsync(number);
+        var existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
         if (existingAcount is null)
         {
             return NotFound();
@@ -92,53 +92,88 @@ public class AccountController : ControllerBase
         if (updatedAccount.AssociatedPhoneNumber != null && updatedAccount.AssociatedPhoneNumber != "string") existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
         await _dbContext.SaveChangesAsync();
         return NoContent();
-        
+
     }
 
 
-    [HttpPost("{number}/Deposit")]
-    public async Task<ActionResult> PostDeposit(string number, Create_DepositDto NewDeposit)
-    {
-        var existingAcount = await _dbContext.bankaccount.FindAsync(number);
+    // [HttpPost("{number}/Deposit")]
+    // public async Task<ActionResult> PostDeposit(string number, Create_DepositDto NewDeposit)
+    // {
+    //     var existingAcount = await _dbContext.bankaccount.FindAsync(number);
 
+
+    //     if (existingAcount is null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     Deposit deposit = NewDeposit.ToEntityFromDeposit(number: number);
+    //     _dbContext.deposits.Add(deposit);
+
+    //     await _dbContext.SaveChangesAsync();
+
+    //     existingAcount.Balance = existingAcount.Balance + deposit.Balance;
+
+    //     await _dbContext.SaveChangesAsync();
+
+    //     return NoContent();
+
+    // }
+    // [HttpPost("{number}/Withdraw")]
+    // public async Task<ActionResult> PostWithdraw(string number, Create_WithdrawDto NewWithdraw)
+    // {
+    //     var existingAcount = await _dbContext.bankaccount.FindAsync(number);
+
+
+    //     if (existingAcount is null)
+    //     {
+    //         return NotFound();
+    //     }
+    //     Withdraw withdraw = NewWithdraw.ToEntityFromWithdraw(number: number);
+    //     _dbContext.withdraws.Add(withdraw);
+
+    //     await _dbContext.SaveChangesAsync();
+
+    //     existingAcount.Balance = existingAcount.Balance - withdraw.Balance;
+
+    //     await _dbContext.SaveChangesAsync();
+
+    //     return NoContent();
+    // }
+    [HttpPost("{number}/transaction")]
+    public async Task<ActionResult> PostTransaction(string number, CreateTransactionDto NewTransaction)
+    {
+        var existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
 
         if (existingAcount is null)
         {
             return NotFound();
         }
-        Deposit deposit = NewDeposit.ToEntityFromDeposit(number: number);
-        _dbContext.deposits.Add(deposit);
-
+        var id = existingAcount.Id;
+        Transactions transaction = NewTransaction.ToEntity(id);
+        transaction.Status = await _dbContext.transactionsstatus.FindAsync(transaction.StatusId);
+        transaction.bankAccount = await _dbContext.bankaccount.FindAsync(transaction.BankAccountId);
+        transaction.TransactionType = await _dbContext.transactiontypes.FindAsync(transaction.TransactionTypeId);
+        _dbContext.transactions.Add(transaction);
         await _dbContext.SaveChangesAsync();
 
-        existingAcount.Balance = existingAcount.Balance + deposit.Balance;
-
+        if (transaction.TransactionType.Type == "Withdraw")
+            {
+                existingAcount.Balance -= Math.Abs(NewTransaction.TransactionAmount);
+            }
+            else
+            {
+                existingAcount.Balance += Math.Abs(NewTransaction.TransactionAmount);
+            }
         await _dbContext.SaveChangesAsync();
-
         return NoContent();
-        
     }
-    [HttpPost("{number}/Withdraw")]
-    public async Task<ActionResult> PostWithdraw(string number, Create_WithdrawDto NewWithdraw)
-    {
-        var existingAcount = await _dbContext.bankaccount.FindAsync(number);
 
+    // [HttpGet("{number}/transaction")]
+    // public async Task<ActionResult> GetAccountTransactions(int number)
+    // {
 
-        if (existingAcount is null)
-        {
-            return NotFound();
-        }
-        Withdraw withdraw = NewWithdraw.ToEntityFromWithdraw(number: number);
-        _dbContext.withdraws.Add(withdraw);
+    // }
 
-        await _dbContext.SaveChangesAsync();
-
-        existingAcount.Balance = existingAcount.Balance - withdraw.Balance;
-
-        await _dbContext.SaveChangesAsync();
-
-        return NoContent();
-        }
 
 
 
