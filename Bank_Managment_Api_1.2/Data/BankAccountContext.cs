@@ -2,15 +2,16 @@ using System;
 using Bank_Managment_Api_1._2.Dto;
 using Bank_Managment_Api_1._2.Entities;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Common;
 
 namespace Bank_Managment_Api_1._2.Data;
 
 public class BankAccountContext(DbContextOptions<BankAccountContext> options) : DbContext(options)
 {
-
-
     public DbSet<BankAccount> bankaccount => Set<BankAccount>();
+
     public DbSet<Deposit> deposits => Set<Deposit>();
+    
     public DbSet<Withdraw> withdraws => Set<Withdraw>();
 
     public DbSet<User> users => Set<User>();
@@ -24,6 +25,8 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
     public DbSet<TransactionStatus> transactionsstatus => Set<TransactionStatus>();
 
     public DbSet<TransactionType> transactiontypes => Set<TransactionType>();
+
+    public DbSet<TokenBlackList> tokenblacklist => Set<TokenBlackList>();
 
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
     // {

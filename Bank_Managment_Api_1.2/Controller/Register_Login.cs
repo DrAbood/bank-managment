@@ -2,12 +2,16 @@ using Bank_Managment_Api_1._2.Data;
 using Bank_Managment_Api_1._2.Dto;
 using Bank_Managment_Api_1._2.Entities;
 using Bank_Managment_Api_1._2.Mapping;
+using Bank_Managment_Api_1._2.Helpfullclasses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Bank_Managment_Api_1._2.Controller
 {
-    [Route("Register")]
+    [Route("Signing_In")]
     [ApiController]
     public class Register_Login : ControllerBase
     {
@@ -19,6 +23,7 @@ namespace Bank_Managment_Api_1._2.Controller
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<UserDetailsDto>> GetUser(int id)
         {
             User? user = await _dbContext.users.FindAsync(id);
@@ -29,10 +34,12 @@ namespace Bank_Managment_Api_1._2.Controller
             return user.ToUserDetailsDto();
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<ActionResult<UserDetailsDto>> PostRegister(CreateUserDto NewUser)
         {
+
             User user = NewUser.ToEntity();
+            user.Role = user.Role.ToLower();
             _dbContext.users.Add(user);
             await _dbContext.SaveChangesAsync();
             return CreatedAtAction(
@@ -41,9 +48,30 @@ namespace Bank_Managment_Api_1._2.Controller
                 user.ToUserDetailsDto()
             );
         }
+        [HttpPost("login")]
+        public async Task<ActionResult> PostLogin(CreateLoginDto login)
+        {
+            var userInDatabase = await _dbContext.users.FirstOrDefaultAsync(x => x.Name == login.UserName);
 
-        
-        
-        
+            if (userInDatabase == null || !BCrypt.Net.BCrypt.Verify(login.Password, userInDatabase.HashedPassword))
+            {
+                return Unauthorized("Password or UserName is invalid");
+            }
+            var token = HelpfulFunctions.GenerateJWTToken(login.UserName);
+            return Ok(new { token });
+        }
+        [HttpPost("Logout")]
+        public async Task<ActionResult> PostLogout()
+        {
+            var jti = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti)?.Value;
+            var BlackListedToken = TokenMapping.ToEntityFromString(jti);
+            
+            await _dbContext.tokenblacklist.AddAsync(BlackListedToken);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok("Token Black Listed");
+        }
+
+                
     }
 }

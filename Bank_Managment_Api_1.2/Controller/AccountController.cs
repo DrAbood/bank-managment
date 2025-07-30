@@ -8,6 +8,7 @@ using Bank_Managment_Api_1._2.Mapping;
 using Bank_Managment_Api_1._2.Helpfullclasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bank_Managment_Api_1._2.Controller;
 
@@ -28,6 +29,7 @@ public class AccountController : ControllerBase
     // {
     //     _BankMangmentfunction = bankMangmentfunction;
     // }
+    [Authorize]
     [HttpGet("{number}")]
     public async Task<ActionResult<AccountSummaryDto>> GetAccount(string number)
     {
@@ -40,7 +42,7 @@ public class AccountController : ControllerBase
 
 
     }
-
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<AccountDetailsDto>> PostAccount(CreateAccountDto newAccount)
     {
@@ -79,7 +81,7 @@ public class AccountController : ControllerBase
             account.ToAccountDetailsDto());
     }
 
-
+    [Authorize]
     [HttpPatch("{number}")]
     public async Task<ActionResult> PatchAccount(string number, UpdateAccountDto updatedAccount)
     {
@@ -139,6 +141,7 @@ public class AccountController : ControllerBase
 
     //     return NoContent();
     // }
+    [Authorize]
     [HttpPost("{number}/transaction")]
     public async Task<ActionResult> PostTransaction(string number, CreateTransactionDto NewTransaction)
     {
@@ -167,7 +170,7 @@ public class AccountController : ControllerBase
         await _dbContext.SaveChangesAsync();
         return NoContent();
     }
-
+    [Authorize]
     [HttpGet("{number}/transaction")]
     public async Task<ActionResult> GetAccountTransactions(string number, [FromQuery] QueryObjects query)
     {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Bank_Managment_Api_1._2.Entities;
 using Bank_Managment_Api_1._2.Mapping;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bank_Managment_Api_1._2.Controller
 {
@@ -16,6 +17,7 @@ namespace Bank_Managment_Api_1._2.Controller
         {
             _dbContext = dbContext;
         }
+        [Authorize]
         [HttpGet("{Id}")]
         public async Task<ActionResult<TransactionDto>> GetTransactionById(Guid Id)
         {

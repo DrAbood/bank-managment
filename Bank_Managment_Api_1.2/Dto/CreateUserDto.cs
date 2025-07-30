@@ -9,6 +9,6 @@ public record class CreateUserDto
     string Email,
     [StringLength(13)]string MobileNumber,
     [MinAge(18)]DateTime DateOfBirth,
-    [Required] [RegularExpression("Customer|Teller|Admin",ErrorMessage ="Invalid Role")] string Role,
+    [Required] [RegularExpression("customer|teller|admin|Customer|Teller|Admin",ErrorMessage ="Invalid Role")] string Role,
     [StringLength(maximumLength: 20, MinimumLength = 8)] string Password
 );
