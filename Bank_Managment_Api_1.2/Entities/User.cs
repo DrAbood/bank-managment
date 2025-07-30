@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace Bank_Managment_Api_1._2.Entities;
-
+[Table("user")]
 public class User
 {
     [Key]

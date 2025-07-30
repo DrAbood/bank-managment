@@ -3,6 +3,7 @@ using System;
 using Bank_Managment_Api_1._2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bank_Managment_Api_1._2.Migrations
 {
     [DbContext(typeof(BankAccountContext))]
-    partial class BankAccountContextModelSnapshot : ModelSnapshot
+    [Migration("20250730065321_tables")]
+    partial class tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
@@ -80,17 +83,17 @@ namespace Bank_Managment_Api_1._2.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryName = "vip"
+                            CategoryName = "VIP"
                         },
                         new
                         {
                             Id = 2,
-                            CategoryName = "premium"
+                            CategoryName = "Premium"
                         },
                         new
                         {
                             Id = 3,
-                            CategoryName = "regular"
+                            CategoryName = "Regular"
                         });
                 });
 
@@ -130,17 +133,17 @@ namespace Bank_Managment_Api_1._2.Migrations
                         new
                         {
                             Id = 1,
-                            RoleName = "customer"
+                            RoleName = "Customer"
                         },
                         new
                         {
                             Id = 2,
-                            RoleName = "teller"
+                            RoleName = "Teller"
                         },
                         new
                         {
                             Id = 3,
-                            RoleName = "admin"
+                            RoleName = "Admin"
                         });
                 });
 
@@ -162,27 +165,27 @@ namespace Bank_Managment_Api_1._2.Migrations
                         new
                         {
                             Id = 1,
-                            Status = "pending"
+                            Status = "Pending"
                         },
                         new
                         {
                             Id = 2,
-                            Status = "completed"
+                            Status = "Completed"
                         },
                         new
                         {
                             Id = 3,
-                            Status = "failed"
+                            Status = "Failed"
                         },
                         new
                         {
                             Id = 4,
-                            Status = "cancelled"
+                            Status = "Cancelled"
                         },
                         new
                         {
                             Id = 5,
-                            Status = "processing"
+                            Status = "Processing"
                         });
                 });
 
@@ -204,12 +207,12 @@ namespace Bank_Managment_Api_1._2.Migrations
                         new
                         {
                             Id = 1,
-                            Type = "deposit"
+                            Type = "Deposit"
                         },
                         new
                         {
                             Id = 2,
-                            Type = "withdraw"
+                            Type = "Withdraw"
                         });
                 });
 

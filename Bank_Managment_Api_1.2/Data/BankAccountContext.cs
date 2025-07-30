@@ -48,74 +48,74 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
             new
             {
                 Id = 1,
-                RoleName = "Customer"
+                RoleName = "customer"
             },
             new
 
             {
                 Id = 2,
-                RoleName = "Teller"
+                RoleName = "teller"
             },
             new
             {
                 Id = 3,
-                RoleName = "Admin"
+                RoleName = "admin"
             }
         );
         modelBuilder.Entity<Category>().HasData(
             new
             {
                 Id = 1,
-                CategoryName = "VIP"
+                CategoryName = "vip"
             },
             new
             {
                 Id = 2,
-                CategoryName = "Premium"
+                CategoryName = "premium"
             },
             new
             {
                 Id = 3,
-                CategoryName = "Regular"
+                CategoryName = "regular"
             }
         );
         modelBuilder.Entity<TransactionType>().HasData(
             new
             {
                 Id = 1,
-                Type = "Deposit"
+                Type = "deposit"
             },
             new
             {
                 Id = 2,
-                Type = "Withdraw"
+                Type = "withdraw"
             }
         );
         modelBuilder.Entity<TransactionStatus>().HasData(
             new
             {
                 Id = 1,
-                Status = "Pending"
+                Status = "pending"
             },
             new
             {
                 Id = 2,
-                Status = "Completed"
+                Status = "completed"
             },
             new
             {
                 Id = 3,
-                Status = "Failed"
+                Status = "failed"
             },
             new
             {
                 Id = 4,
-                Status = "Cancelled"
+                Status = "cancelled"
             },
             new
             {
                 Id = 5,
-                Status = "Processing"
+                Status = "processing"
             }
         );
     }

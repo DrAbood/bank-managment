@@ -61,7 +61,7 @@ public class AccountController : ControllerBase
         {
             return BadRequest("userId doesn't exist");
         }
-        if (User.Role != "Customer")
+        if (User.Role.ToLower() != "customer")
         {
             return BadRequest("The User is Not a Customer");
         }
@@ -88,8 +88,8 @@ public class AccountController : ControllerBase
         {
             return NotFound();
         }
-        if (updatedAccount.HolderName != null && updatedAccount.HolderName != "string") existingAcount.HolderName = updatedAccount.HolderName;
-        if (updatedAccount.AssociatedPhoneNumber != null && updatedAccount.AssociatedPhoneNumber != "string") existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
+        if (!string.IsNullOrEmpty(updatedAccount.HolderName) && updatedAccount.HolderName != "string") existingAcount.HolderName = updatedAccount.HolderName;
+        if (!string.IsNullOrEmpty(updatedAccount.AssociatedPhoneNumber) && updatedAccount.AssociatedPhoneNumber != "string") existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
         await _dbContext.SaveChangesAsync();
         return NoContent();
 
@@ -153,10 +153,8 @@ public class AccountController : ControllerBase
         transaction.Status = await _dbContext.transactionsstatus.FindAsync(transaction.StatusId);
         transaction.bankAccount = await _dbContext.bankaccount.FindAsync(transaction.BankAccountId);
         transaction.TransactionType = await _dbContext.transactiontypes.FindAsync(transaction.TransactionTypeId);
-        _dbContext.transactions.Add(transaction);
-        await _dbContext.SaveChangesAsync();
-
-        if (transaction.TransactionType.Type == "Withdraw")
+        
+        if (transaction.TransactionType.Type.ToLower() == "withdraw")
             {
                 existingAcount.Balance -= Math.Abs(NewTransaction.TransactionAmount);
             }
@@ -164,15 +162,48 @@ public class AccountController : ControllerBase
             {
                 existingAcount.Balance += Math.Abs(NewTransaction.TransactionAmount);
             }
+
+        _dbContext.transactions.Add(transaction);
         await _dbContext.SaveChangesAsync();
         return NoContent();
     }
 
-    // [HttpGet("{number}/transaction")]
-    // public async Task<ActionResult> GetAccountTransactions(int number)
-    // {
+    [HttpGet("{number}/transaction")]
+    public async Task<ActionResult> GetAccountTransactions(string number, [FromQuery] QueryObjects query)
+    {
+        var existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
+        if (existingAcount is null)
+        {
+            return NotFound();
+        }
+        var id = existingAcount.Id;
 
-    // }
+        var transaction = _dbContext.transactions.Where(a => a.BankAccountId == id)
+        .Select(a => new
+        {
+            a.Id,
+            a.Timestamp,
+            a.Status.Status,
+            a.TransactionType.Type,
+            a.TransactionAmount
+        }
+                                )
+                                .AsQueryable();
+
+
+        if (!string.IsNullOrEmpty(query.TransactionType))
+        {
+            transaction = transaction.Where(t => t.Type == query.TransactionType);
+
+        }
+        else if (query.StartDate != null && query.EndDate != null)
+        {
+            transaction = transaction.Where(a => a.Timestamp <= query.EndDate && a.Timestamp >= query.StartDate);
+
+        }
+
+        return Ok(await transaction.ToListAsync());
+    }
 
 
 
