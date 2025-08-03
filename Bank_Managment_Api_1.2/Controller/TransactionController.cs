@@ -10,10 +10,10 @@ namespace Bank_Managment_Api_1._2.Controller
 {
     [Route("Transaction")]
     [ApiController]
-    public class Transaction : ControllerBase
+    public class TransactionController : ControllerBase
     {
         private BankAccountContext _dbContext;
-        public Transaction(BankAccountContext dbContext)
+        public TransactionController(BankAccountContext dbContext)
         {
             _dbContext = dbContext;
         }

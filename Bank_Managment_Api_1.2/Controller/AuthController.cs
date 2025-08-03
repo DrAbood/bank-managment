@@ -2,7 +2,7 @@ using Bank_Managment_Api_1._2.Data;
 using Bank_Managment_Api_1._2.Dto;
 using Bank_Managment_Api_1._2.Entities;
 using Bank_Managment_Api_1._2.Mapping;
-using Bank_Managment_Api_1._2.Helpfullclasses;
+using Bank_Managment_Api_1._2.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +11,13 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Bank_Managment_Api_1._2.Controller
 {
-    [Route("Signing_In")]
+    [Route("Auth")]
     [ApiController]
-    public class Register_Login : ControllerBase
+    public class AuthController : ControllerBase
     {
         private BankAccountContext _dbContext;
 
-        public Register_Login(BankAccountContext dbContext)
+        public AuthController(BankAccountContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -52,14 +52,19 @@ namespace Bank_Managment_Api_1._2.Controller
         public async Task<ActionResult> PostLogin(CreateLoginDto login)
         {
             var userInDatabase = await _dbContext.users.FirstOrDefaultAsync(x => x.Name == login.UserName);
-
-            if (userInDatabase == null || !BCrypt.Net.BCrypt.Verify(login.Password, userInDatabase.HashedPassword))
+            if (userInDatabase == null)
             {
                 return Unauthorized("Password or UserName is invalid");
             }
-            var token = HelpfulFunctions.GenerateJWTToken(login.UserName);
+
+            if (!BCrypt.Net.BCrypt.Verify(login.Password, userInDatabase.HashedPassword))
+            {
+                return Unauthorized("Password or UserName is invalid");
+            }
+            var token = AuthServices.GenerateJWTToken(login.UserName);
             return Ok(new { token });
         }
+        [Authorize]
         [HttpPost("Logout")]
         public async Task<ActionResult> PostLogout()
         {

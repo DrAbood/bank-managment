@@ -3,6 +3,7 @@ using Bank_Managment_Api_1._2.Dto;
 using Bank_Managment_Api_1._2.Entities;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Common;
+using static Bank_Managment_Api_1._2.Utilities.Enums;
 
 namespace Bank_Managment_Api_1._2.Data;
 
@@ -47,78 +48,96 @@ public class BankAccountContext(DbContextOptions<BankAccountContext> options) : 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Role>()
+                        .Property(u => u.RoleName)
+                        .HasConversion<string>();  
+                          
+        modelBuilder.Entity<Category>()
+                        .Property(u => u.CategoryName)
+                        .HasConversion<string>();
         modelBuilder.Entity<Role>().HasData(
             new
             {
                 Id = 1,
-                RoleName = "customer"
+                RoleName = UserRole.customer.ToString()
             },
             new
 
             {
                 Id = 2,
-                RoleName = "teller"
+                RoleName = UserRole.teller.ToString()
             },
             new
             {
                 Id = 3,
-                RoleName = "admin"
+                RoleName = UserRole.admin.ToString()
             }
         );
+
+
         modelBuilder.Entity<Category>().HasData(
             new
             {
                 Id = 1,
-                CategoryName = "vip"
+                CategoryName = Categorys.vip.ToString()
             },
             new
             {
                 Id = 2,
-                CategoryName = "premium"
+                CategoryName = Categorys.premium.ToString()
             },
             new
             {
                 Id = 3,
-                CategoryName = "regular"
+                CategoryName = Categorys.regular.ToString()
             }
         );
+
+        modelBuilder.Entity<TransactionType>()
+                .Property(u => u.Type)
+                .HasConversion<string>();
+
         modelBuilder.Entity<TransactionType>().HasData(
             new
             {
                 Id = 1,
-                Type = "deposit"
+                Type = TransactionTypes.deposit.ToString()
             },
             new
             {
                 Id = 2,
-                Type = "withdraw"
+                Type = TransactionTypes.withdraw.ToString()
             }
         );
+        modelBuilder.Entity<TransactionStatus>()
+                .Property(u => u.Status)
+                .HasConversion<string>();
+
         modelBuilder.Entity<TransactionStatus>().HasData(
             new
             {
                 Id = 1,
-                Status = "pending"
+                Status = TransactionStatuses.pending.ToString()
             },
             new
             {
                 Id = 2,
-                Status = "completed"
+                Status = TransactionStatuses.completed.ToString()
             },
             new
             {
                 Id = 3,
-                Status = "failed"
+                Status = TransactionStatuses.failed.ToString()
             },
             new
             {
                 Id = 4,
-                Status = "cancelled"
+                Status = TransactionStatuses.cancelled.ToString()
             },
             new
             {
                 Id = 5,
-                Status = "processing"
+                Status = TransactionStatuses.processing.ToString()
             }
         );
     }

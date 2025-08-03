@@ -5,7 +5,7 @@ using Bank_Managment_Api_1._2.Dto;
 using Bank_Managment_Api_1._2.Entities;
 using Bank_Managment_Api_1._2.Mapping;
 // using Bank_Managment_Api_1._2.Module.BankManagmentModule;
-using Bank_Managment_Api_1._2.Helpfullclasses;
+using Bank_Managment_Api_1._2.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -46,7 +46,7 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<AccountDetailsDto>> PostAccount(CreateAccountDto newAccount)
     {
-        string Generatednumber = await HelpfulFunctions.GenerateAccountNumber(_dbContext);
+        string Generatednumber = await Helper.GenerateAccountNumber(_dbContext);
         // var account = new BankAccount
         // {
         //     // DateTime.Now.ToString("yyMMdd") + accounts.Count.ToString("D4"),
@@ -157,7 +157,7 @@ public class AccountController : ControllerBase
         transaction.bankAccount = await _dbContext.bankaccount.FindAsync(transaction.BankAccountId);
         transaction.TransactionType = await _dbContext.transactiontypes.FindAsync(transaction.TransactionTypeId);
         
-        if (transaction.TransactionType.Type.ToLower() == "withdraw")
+        if (transaction.TransactionType.Type.ToString().ToLower() == "withdraw")
             {
                 existingAcount.Balance -= Math.Abs(NewTransaction.TransactionAmount);
             }
@@ -165,14 +165,25 @@ public class AccountController : ControllerBase
             {
                 existingAcount.Balance += Math.Abs(NewTransaction.TransactionAmount);
             }
+        /*
+                existingAccount.Balance += NewTransaction.TransactionAmount;
 
+            if (transaction.transactionAmount < 0)
+            {  
+                existingAccount.TransactionType == "Withdraw"
+            }
+            else
+            {
+                existingAccount.TransactionType == "Deposit"
+            }
+        */
         _dbContext.transactions.Add(transaction);
         await _dbContext.SaveChangesAsync();
         return NoContent();
     }
     [Authorize]
     [HttpGet("{number}/transaction")]
-    public async Task<ActionResult> GetAccountTransactions(string number, [FromQuery] QueryObjects query)
+    public async Task<ActionResult> GetAccountTransactions(string number, [FromQuery] QueryParameter query)
     {
         var existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
         if (existingAcount is null)
@@ -196,7 +207,7 @@ public class AccountController : ControllerBase
 
         if (!string.IsNullOrEmpty(query.TransactionType))
         {
-            transaction = transaction.Where(t => t.Type == query.TransactionType);
+            transaction = transaction.Where(t => t.Type.ToString() == query.TransactionType);
 
         }
         else if (query.StartDate != null && query.EndDate != null)
