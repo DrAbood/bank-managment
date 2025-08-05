@@ -201,7 +201,7 @@ public class AccountController : ControllerBase
             a.TransactionType.Type,
             a.TransactionAmount
         }
-                                )
+        )
                                 .AsQueryable();
 
 

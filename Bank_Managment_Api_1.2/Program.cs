@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Bank_Managment_Api_1._2.Data;
 using Bank_Managment_Api_1._2.Entities;
+using Bank_Managment_Api_1._2.Excepetion_Handler;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 // using Bank_Managment_Api_1._2.Module.BankManagmentModule;
@@ -86,6 +87,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // builder.Services.AddScoped<IHelpfulFunctions,HelpfulFunctions>();
 builder.Services.AddAuthorization();
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
