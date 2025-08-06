@@ -13,9 +13,11 @@ namespace Bank_Managment_Api_1._2.Controller
     public class TransactionController : ControllerBase
     {
         private BankAccountContext _dbContext;
-        public TransactionController(BankAccountContext dbContext)
+        private ILogger<TransactionController> _Logger;
+        public TransactionController(BankAccountContext dbContext, ILogger<TransactionController> logger)
         {
             _dbContext = dbContext;
+            _Logger = logger;
         }
         [Authorize]
         [HttpGet("{Id}")]
@@ -26,6 +28,7 @@ namespace Bank_Managment_Api_1._2.Controller
             {
                 return NotFound();
             }
+            _Logger.LogInformation($"Fetching The Transaction with id {transaction.Id} ");
             return transaction.ToTransactionDto();
         }
 

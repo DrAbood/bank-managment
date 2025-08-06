@@ -16,10 +16,12 @@ namespace Bank_Managment_Api_1._2.Controller
     public class AuthController : ControllerBase
     {
         private BankAccountContext _dbContext;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(BankAccountContext dbContext)
+        public AuthController(BankAccountContext dbContext, ILogger<AuthController> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         [HttpGet("{id}")]
@@ -31,6 +33,7 @@ namespace Bank_Managment_Api_1._2.Controller
             {
                 return NotFound();
             }
+            _logger.LogInformation($"Fetching The User Named {user.Name}");
             return user.ToUserDetailsDto();
         }
 
@@ -42,6 +45,7 @@ namespace Bank_Managment_Api_1._2.Controller
             user.Role = user.Role.ToLower();
             _dbContext.users.Add(user);
             await _dbContext.SaveChangesAsync();
+            _logger.LogInformation($"Register user: {user.Name} with id {user.Id}");
             return CreatedAtAction(
                 nameof(GetUser),
                 new { id = user.Id },
@@ -62,6 +66,7 @@ namespace Bank_Managment_Api_1._2.Controller
                 return Unauthorized("Password or UserName is invalid");
             }
             var token = AuthServices.GenerateJWTToken(login.UserName);
+            _logger.LogInformation($"Login {login.UserName}");
             return Ok(new { token });
         }
         [Authorize]
@@ -73,7 +78,7 @@ namespace Bank_Managment_Api_1._2.Controller
             
             await _dbContext.tokenblacklist.AddAsync(BlackListedToken);
             await _dbContext.SaveChangesAsync();
-
+            _logger.LogInformation("the user loggedout");
             return Ok("Token Black Listed");
         }
 

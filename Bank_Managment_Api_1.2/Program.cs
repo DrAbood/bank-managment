@@ -5,6 +5,8 @@ using Bank_Managment_Api_1._2.Data;
 using Bank_Managment_Api_1._2.Entities;
 using Bank_Managment_Api_1._2.Excepetion_Handler;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using NLog.Extensions.Logging;
+
 
 // using Bank_Managment_Api_1._2.Module.BankManagmentModule;
 using Microsoft.EntityFrameworkCore;
@@ -88,7 +90,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // builder.Services.AddScoped<IHelpfulFunctions,HelpfulFunctions>();
 builder.Services.AddAuthorization();
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+// builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.SetMinimumLevel(LogLevel.Trace);
+});
+
+// Add NLog as the logger provider
+builder.Services.AddSingleton<ILoggerProvider, NLogLoggerProvider>();
 
 var app = builder.Build();
 
@@ -103,6 +115,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// app.UseMiddleware<GlobalExceptionHandler>();
+app.AddExceptionHandler();
 app.MapControllers();
 
 app.MigrateDb();

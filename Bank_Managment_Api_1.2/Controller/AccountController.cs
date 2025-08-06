@@ -19,10 +19,12 @@ public class AccountController : ControllerBase
 {
     // private readonly IBankManagementFunctions _BankMangmentfunction;
     private BankAccountContext _dbContext;
+    private readonly ILogger<AccountController> _logger;
 
-    public AccountController(BankAccountContext dbContext)
+    public AccountController(BankAccountContext dbContext, ILogger<AccountController> logger)
     {
         _dbContext = dbContext;
+        _logger = logger;
     }
 
     // public AccountController(IBankManagementFunctions bankMangmentfunction)
@@ -38,6 +40,7 @@ public class AccountController : ControllerBase
         {
             return NotFound();
         }
+        _logger.LogInformation($"Fetching information about {account.BankNumber}");
         return account.ToAccountSummaryDto();
 
 
@@ -75,6 +78,7 @@ public class AccountController : ControllerBase
 
         _dbContext.bankaccount.Add(account);
         await _dbContext.SaveChangesAsync();
+        _logger.LogInformation("Created a new Bank Account");
         return CreatedAtAction(
             nameof(GetAccount),
             new { number = account.BankNumber },
@@ -93,6 +97,7 @@ public class AccountController : ControllerBase
         if (!string.IsNullOrEmpty(updatedAccount.HolderName) && updatedAccount.HolderName != "string") existingAcount.HolderName = updatedAccount.HolderName;
         if (!string.IsNullOrEmpty(updatedAccount.AssociatedPhoneNumber) && updatedAccount.AssociatedPhoneNumber != "string") existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
         await _dbContext.SaveChangesAsync();
+        _logger.LogInformation($"change information about {existingAcount.BankNumber}");
         return NoContent();
 
     }
@@ -179,6 +184,7 @@ public class AccountController : ControllerBase
         */
         _dbContext.transactions.Add(transaction);
         await _dbContext.SaveChangesAsync();
+        _logger.LogInformation($"the bank number {number} have made a {transaction.TransactionType} with an amount of {Math.Abs(NewTransaction.TransactionAmount)}");
         return NoContent();
     }
     [Authorize]
@@ -215,7 +221,7 @@ public class AccountController : ControllerBase
             transaction = transaction.Where(a => a.Timestamp <= query.EndDate && a.Timestamp >= query.StartDate);
 
         }
-
+        _logger.LogInformation($"Fetching the transactions for {number} ");
         return Ok(await transaction.ToListAsync());
     }
 
