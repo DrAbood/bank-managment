@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Bank_Managment_Api_1._2.Controller
+namespace Bank_Managment_Api_1._2.Controllers
 {
     [Route("Auth")]
     [ApiController]

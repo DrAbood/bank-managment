@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bank_Managment_Api_1._2.Controller
+namespace Bank_Managment_Api_1._2.Controllers
 {
     [Route("test")]
     [ApiController]

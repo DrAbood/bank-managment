@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Bank_Managment_Api_1._2.Controller;
+namespace Bank_Managment_Api_1._2.Controllers;
 
 [Route("Account")]
 [ApiController]
