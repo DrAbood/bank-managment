@@ -11,7 +11,5 @@ public record class CreateAccountDto
     DateTime DateOfBirth,
     int CategoryId,
     int UserId,
-    bool IsActive = true
-    
-    
+    bool IsActive 
 );

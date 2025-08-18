@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace HomeController.Controllers
+namespace HomeController.MVCControllers
 {
+
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -10,7 +11,12 @@ namespace HomeController.Controllers
         }
         public IActionResult Privacy()
         {
-            return View();;
+            return View();
+        }
+        [Route("Errors")]
+        public IActionResult Errors()
+        {
+            return View();
         }
     }
 }

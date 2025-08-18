@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"]= "Register Page";
+}
+<!DOCTPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+       <h1> Register Page</h1>
+        @* <style>
+            body{
+                background-color: lightblue;
+                text-align:center;
+            }
+            .NameInput{
+                    margin-right:1%;
+                    margin-top: 2%;
+                    
+            }
+            .MobileNumberInput
+            {
+                margin-right:%;
+            }
+            
+        </style>         *@
+        @* <script src='/css/Register.css'></script> *@
+            <link rel="stylesheet" type= "text/css" href="/css/Authentication/Auth.css">
+
+            <script src='/js/Auth/Register.js' defer></script>
+            
+    </head>
+
+    
+    @* Styled By Deepseek *@
+    <body>
+  <div class="form-container">
+    <div class="form-header">
+      <h1>Create Account</h1>
+      <p>Register to access your dashboard</p>
+    </div>
+    
+    <form id="registerForm">
+      <div class="form-layout">
+        <div class="form-group">
+          <label for="Name">UserName</label>
+          <input type="text" id="Name" name="Name" required placeholder="Enter UserName">
+        </div>
+        
+        <div class="form-group">
+          <label for="Email">Email</label>
+          <input type="text" id="Email" name="Email" placeholder="Enter Email">
+        </div>
+        
+        <div class="form-group">
+          <label for="Number">Mobile Number</label>
+          <input type="text" id="Number" name="MobileNumber" placeholder="Enter Mobile Number" maxlength="13">
+        </div>
+        
+        <div class="form-group">
+          <label for="Birth">Date Of Birth</label>
+          <input type="Date" id="Birth" name="DateOfBirth" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="Role">Role</label>
+          <select id="Role" name="Role" required>
+            <option value="admin">admin</option>
+            <option value="teller">teller</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required placeholder="Enter Password" minlength="8" maxlength="20">
+        </div>
+        
+        <div class="form-group">
+          <button class="submit-btn" type="submit" id="submit">Register</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>
+

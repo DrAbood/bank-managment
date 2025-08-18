@@ -1,0 +1,158 @@
+/* ====== Styled by ChatGpt ====== */
+
+/* add-account-style.css
+   Styles to match the DeepSeek main page and keep visual sync.
+   No HTML/IDs changed.
+*/
+
+/* Theme variables (match DeepSeek palette) */
+:root{
+  --bg-start:#f5f7fa; --bg-end:#e4edf5;
+  --primary-500:#4299e1; --primary-600:#3182ce; --primary-700:#2b6cb0;
+  --accent-500:#48bb78; --accent-600:#38a169;
+  --muted:#718096; --text:#2d3748; --card-bg:#ffffff;
+  --radius:16px; --shadow-sm: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-lg: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+/* Page background & base */
+html, body {
+  height:100%;
+  margin:0;
+  font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial;
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display:flex;
+  justify-content:center;
+  padding:22px;
+  box-sizing:border-box;
+}
+
+/* Heading - matches main page style */
+h1 {
+  text-align:center;
+  font-size:2.2rem;
+  margin: 10px 0 20px;
+  font-weight:800;
+  background: linear-gradient(to right, var(--primary-500), var(--primary-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  padding-bottom: 12px;
+}
+h1::after {
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:94px;
+  height:4px;
+  background: linear-gradient(to right, var(--primary-500), var(--primary-600));
+  border-radius:3px;
+}
+
+/* Center and style the form like the main page */
+#AddAccountForm {
+  width:100%;
+  max-width:720px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding:34px;
+  box-shadow: var(--shadow-sm);
+  box-sizing:border-box;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+#AddAccountForm:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+/* Form groups */
+#AddAccountForm > div {
+  margin-bottom:20px;
+  position:relative;
+}
+
+/* Labels */
+#AddAccountForm label {
+  display:block;
+  margin-bottom:8px;
+  font-weight:600;
+  color:#4a5568;
+  font-size:1rem;
+}
+
+/* Inputs, selects, date, number */
+#AddAccountForm input[type="text"],
+#AddAccountForm input[type="number"],
+#AddAccountForm input[type="date"],
+#AddAccountForm select {
+  width:100%;
+  padding:12px 16px;
+  border-radius:10px;
+  border:1px solid #e2e8f0;
+  background:#fafafa;
+  font-size:15px;
+  box-sizing:border-box;
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+#AddAccountForm input:focus,
+#AddAccountForm select:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 4px rgba(66,153,225,0.12);
+  outline:none;
+  background:#fff;
+}
+
+/* Keep required fields visible but subtle */
+#AddAccountForm input[required], 
+#AddAccountForm select[required] {
+  box-shadow: none;
+}
+
+/* Button - keep same visual identity as main page SubmitAccount */
+#submitAccount{
+  display:inline-block;
+  min-width:160px;
+  padding:12px 30px;
+  margin-top:6px;
+  font-size:1.05rem;
+  font-weight:700;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  background: linear-gradient(to right, var(--primary-500), var(--primary-600));
+  color:#fff;
+  box-shadow: 0 6px 18px rgba(66,153,225,0.18);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+#submitAccount:hover{ transform: translateY(-3px); box-shadow: 0 10px 30px rgba(50,120,200,0.18); }
+#submitAccount:active{ transform: translateY(0); }
+
+/* Make sure the green add-button style from main page (if reused) is compatible */
+#add-account-btn {
+  padding:12px 28px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  background: linear-gradient(to right, var(--accent-500), var(--accent-600));
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 18px rgba(72,187,120,0.12);
+}
+
+/* Small helper utilities useful on this page */
+.text-muted { color: var(--muted); }
+.text-center { text-align:center; }
+.full-width { width:100%; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 { font-size:1.9rem; padding-bottom:10px; }
+  #AddAccountForm { padding:22px; }
+}
+@media (max-width: 480px) {
+  h1 { font-size:1.6rem; }
+  #AddAccountForm { padding:18px; }
+}

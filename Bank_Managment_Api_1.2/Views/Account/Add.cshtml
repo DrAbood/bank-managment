@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"]= "AddAccount Page";
+}
+
+<!DOCTPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/js/Account/add.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/Account/Add.css"
+    </head>
+    <body>
+
+        <h1> Add Account</h1>
+        <form id="AddAccountForm">
+            <div>
+                <label id="Name" for="NameInput">Account Name</label>
+                <input type='text' id="NameInput" required maxlength="35"> 
+            </div>
+            <div>
+                <label id="PhoneNumber" for="PhoneNumberInput">Associated Phone Number </label>
+                <input type="text" id="PhoneNumberInput" required maxlength="13">
+            </div>
+            <div>
+                <label id="Balance" for="BalanceInput">Balance</label>
+                <input type="number" id=BalanceInput value="0" >
+            </div>
+            <div>
+                <label for="Birth">Date Of Birth</label>
+                <input type="Date" id="Birth" name="DateOfBirth" required >
+            </div>
+            <div>
+                <label for="CategoryIdInput">Role</label>
+                <select id="CategoryIdInput" name="CategoryIdInput" required>
+                    <option value="1">Vip</option>
+                    <option value="2">Premium</option>
+                    <option value="3">Regular</option>
+                </select>
+            </div>
+            <div>
+                <label id="UserId" for="UserIdInput"> User Id </label>
+                <input type="number" id="UserIdInput" value="1">
+            </div>
+            <div>
+                <label id="IsActive" for="isActiveInput">Active</label>
+                <select id="isActiveInput"name="isActiveInput">
+                    <option value= "1">Yes</option>
+                    <option value= "0"> No </option>
+                </select>
+            </div>
+            <button type="submit" id="submitAccount"> Add</button>
+
+        </form>
+    </body>
+</html>

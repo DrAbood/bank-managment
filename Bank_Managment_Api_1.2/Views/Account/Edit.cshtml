@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"]= "Edit Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Account</title>
+
+    <!-- local CSS -->
+    <link rel="stylesheet" href="/css/Account/Edit.css" />
+
+    <!-- local jQuery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/js/Account/Edit.js" defer></script>
+</head>
+<body>
+    <div class="page-wrapper">
+        <h1>Edit Account</h1>
+
+        <div class="details-card">
+            <!-- Account number display -->
+            <ul class="details-list">Account Number</ul>
+
+            <!-- Edit form -->
+            <form id="EditForm" class="edit-form">
+                <div class="form-group">
+                    <label for="HolderName">Holder Name</label>
+                    <input type="text" id="HolderName" name="NameEdit" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="PhoneNumber">Phone Number</label>
+                    <input type="text" id="PhoneNumber" name="PhoneNumberEdit" required>
+                </div>
+
+                <button type="submit" id="submit" class="edit-btn">Edit Account</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

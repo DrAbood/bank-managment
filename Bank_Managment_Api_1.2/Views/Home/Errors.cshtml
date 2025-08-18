@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"]= "Error Page";
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Error Page</title>
+        <link rel="stylesheet" href="css/HomePage/Errors.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    </head>
+    <body>
+        <h1>Error</h1>
+        <p id="message">There Have Been Error from the server side</p>
+        <button onclick= "window.location.href='@Url.Action("Index")'" type="button">Return To Home Page </button>
+    </body>
+</html>

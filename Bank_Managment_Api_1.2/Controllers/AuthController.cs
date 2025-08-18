@@ -13,7 +13,7 @@ namespace Bank_Managment_Api_1._2.Controllers
 {
     [Route("Auth")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : Controller
     {
         private BankAccountContext _dbContext;
         private readonly ILogger<AuthController> _logger;
@@ -38,20 +38,37 @@ namespace Bank_Managment_Api_1._2.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<ActionResult<UserDetailsDto>> PostRegister(CreateUserDto NewUser)
+        [AllowAnonymous]
+        public async Task<ActionResult<UserDetailsDto>> PostRegister([FromBody] CreateUserDto NewUser)
         {
-
-            User user = NewUser.ToEntity();
-            user.Role = user.Role.ToLower();
-            _dbContext.users.Add(user);
-            await _dbContext.SaveChangesAsync();
-            _logger.LogInformation($"Register user: {user.Name} with id {user.Id}");
-            return CreatedAtAction(
-                nameof(GetUser),
-                new { id = user.Id },
-                user.ToUserDetailsDto()
-            );
+            try
+            {
+                User user = NewUser.ToEntity();
+                user.Role = user.Role.ToLower();
+                _dbContext.users.Add(user);
+                await _dbContext.SaveChangesAsync();
+                _logger.LogInformation($"Register user: {user.Name} with id {user.Id}");
+                return CreatedAtAction(
+                    nameof(GetUser),
+                    new { id = user.Id },
+                    user.ToUserDetailsDto()
+                );
+                // return Json(new
+                // {
+                //     success = true,
+                //     user = user.ToUserDetailsDto(),
+                // });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = ex.Message
+                });
+            }
         }
+        
         [HttpPost("login")]
         public async Task<ActionResult> PostLogin(CreateLoginDto login)
         {
@@ -67,6 +84,7 @@ namespace Bank_Managment_Api_1._2.Controllers
             }
             var token = AuthServices.GenerateJWTToken(login.UserName);
             _logger.LogInformation($"Login {login.UserName}");
+            
             return Ok(new { token });
         }
         [Authorize]

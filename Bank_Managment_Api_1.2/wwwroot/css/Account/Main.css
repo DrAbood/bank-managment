@@ -1,0 +1,317 @@
+/* ====== Styled by DeepSeek ====== */
+
+
+/* ===== Enhanced Dashboard Styles ===== */
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: #2d3748;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 20px 0 30px;
+    color: #2b6cb0;
+    background: linear-gradient(to right, #4299e1, #3182ce);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #4299e1, #3182ce);
+    border-radius: 2px;
+}
+
+/* Main Form Container */
+form {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, #4299e1, #3182ce);
+}
+
+form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Form Group Styling */
+form > div {
+    margin-bottom: 30px;
+    position: relative;
+    padding-left: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #4a5568;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    background-color: white;
+    outline: none;
+}
+
+/* Submit Button */
+#SubmitAccount {
+    background: linear-gradient(to right, #4299e1, #3182ce);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 30px auto 0;
+    min-width: 200px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#SubmitAccount::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to right, #3182ce, #2b6cb0);
+    transition: width 0.5s ease;
+    z-index: -1;
+}
+
+#SubmitAccount:hover::before {
+    width: 100%;
+}
+
+#SubmitAccount:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(66, 153, 225, 0.4);
+}
+
+#SubmitAccount:active {
+    transform: translateY(0);
+}
+
+/* Enhanced Add Account Section */
+.account-actions {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.account-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.divider-line {
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e2e8f0, transparent);
+}
+
+.divider-text {
+    padding: 0 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a5568;
+    text-align: center;
+}
+
+.add-account-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-account-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #4299e1, #3182ce);
+}
+
+.add-account-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+.add-account-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, rgba(49, 130, 206, 0.15) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.add-icon i {
+    font-size: 2rem;
+    background: linear-gradient(to right, #4299e1, #3182ce);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.add-account-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #2b6cb0;
+}
+
+.add-account-content p {
+    color: #718096;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+#add-account-btn {
+    background: linear-gradient(to right, #48bb78, #38a169);
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#add-account-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to right, #38a169, #2f855a);
+    transition: width 0.5s ease;
+    z-index: -1;
+}
+
+#add-account-btn:hover::before {
+    width: 100%;
+}
+
+#add-account-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(72, 187, 120, 0.4);
+}
+
+#add-account-btn i {
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form, .add-account-card {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .add-account-content h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+        padding-bottom: 10px;
+    }
+    
+    h1::after {
+        width: 80px;
+        height: 3px;
+    }
+    
+    .add-icon {
+        width: 60px;
+        height: 60px;
+    }
+}

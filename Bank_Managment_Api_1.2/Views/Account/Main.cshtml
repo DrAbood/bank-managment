@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"]= "Main Page";
+}
+<!DOCTPE html>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/js/Account/Main.js" defer></script>
+        <link rel='stylesheet' type="text/css" href="/css/Account/Main.css">
+    </head>
+
+    @* Styled By DeepSeek *@
+
+<body>
+    <h1>Main Page</h1>
+    
+    <form id="EnterDetails" method="post">
+        <div>
+            <label class="UserName" id="UserName" for="NameInput" >Account User Name</label>
+            
+            <input type="text" id="NameInput" name="Name"  value=""> 
+        </div>
+        
+        <div>
+            <label class="AccountNumber" id="AccountNumber" for="NumberInput" >Account Number</label>
+            
+            <input type="text" id="NumberInput"  value="" name="Number">
+        </div>
+
+        <input type="submit" id="SubmitAccount"   ></button>
+    </form> 
+    
+        
+        <div class="add-account-card">
+            <div class="add-account-content">
+
+                <h3>Create New Account</h3>
+                
+                <button id="add-account-btn" onclick="window.location.href='@Url.Action("Add")'">
+                    <i>+</i> Add Account
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

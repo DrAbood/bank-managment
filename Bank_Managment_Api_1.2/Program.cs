@@ -17,14 +17,19 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
+// builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options => 
+        options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 // builder.Services.AddDbContext<BankAccountContext>(opt =>
 //     opt.UseInMemoryDatabase("BankAccount"));
 // builder.Services.AddDbContext<BankAccountContext>(options =>
 // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var connString = builder.Configuration.GetConnectionString("BankAccount");
+
 builder.Services.AddSqlite<BankAccountContext>(connString);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -91,6 +96,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // builder.Services.AddScoped<IHelpfulFunctions,HelpfulFunctions>();
+
+
 builder.Services.AddAuthorization();
 
 
@@ -108,10 +115,14 @@ builder.Services.AddSingleton<ILoggerProvider, NLogLoggerProvider>();
 
 var app = builder.Build();
 
+
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
+    // app.UseDeveloperExceptionPage();
+
 
 }
 
@@ -122,18 +133,24 @@ app.UseRouting();
 
 
 app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthorization(); 
+
+app.MapControllers();
 
 
 // app.UseMiddleware<GlobalExceptionHandler>();
 app.AddExceptionHandler();
 
+app.UseExceptionHandler("/error");
+app.Map("/error", () => Results.Problem());
+
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
-// app.MapControllers();
+// app.MapDefaultControllerRoute();
 
 
 app.MigrateDb();

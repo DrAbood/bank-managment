@@ -35,19 +35,29 @@ public class AccountController : ControllerBase
     [HttpGet("{number}")]
     public async Task<ActionResult<AccountSummaryDto>> GetAccount(string number)
     {
-        BankAccount? account = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
+        BankAccount? account = null;
+        if (number.All(char.IsDigit))
+        {
+            account = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
+        }
+        else 
+        {
+            account = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.HolderName == number);
+        }
+
+    
         if (account == null)
         {
-            return NotFound();
+            return NotFound(number);
         }
         _logger.LogInformation($"Fetching information about {account.BankNumber}");
         return account.ToAccountSummaryDto();
-
-
     }
+
+
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<AccountDetailsDto>> PostAccount(CreateAccountDto newAccount)
+    public async Task<ActionResult<AccountDetailsDto>> PostAccount([FromBody] CreateAccountDto newAccount)
     {
         string Generatednumber = await Helper.GenerateAccountNumber(_dbContext);
         // var account = new BankAccount
@@ -86,14 +96,24 @@ public class AccountController : ControllerBase
     }
 
     [Authorize]
-    [HttpPatch("{number}")]
+    [HttpPatch("patch/{number}")]
     public async Task<ActionResult> PatchAccount(string number, UpdateAccountDto updatedAccount)
     {
-        var existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
+        BankAccount? existingAcount = null;
+        if (number.All(char.IsDigit))
+        {
+            existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
+        }
+        else 
+        {
+            existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.HolderName == number);
+        }
+
         if (existingAcount is null)
         {
             return NotFound();
         }
+        
         if (!string.IsNullOrEmpty(updatedAccount.HolderName) && updatedAccount.HolderName != "string") existingAcount.HolderName = updatedAccount.HolderName;
         if (!string.IsNullOrEmpty(updatedAccount.AssociatedPhoneNumber) && updatedAccount.AssociatedPhoneNumber != "string") existingAcount.AssociatedPhoneNumber = updatedAccount.AssociatedPhoneNumber;
         await _dbContext.SaveChangesAsync();
@@ -161,15 +181,15 @@ public class AccountController : ControllerBase
         transaction.Status = await _dbContext.transactionsstatus.FindAsync(transaction.StatusId);
         transaction.bankAccount = await _dbContext.bankaccount.FindAsync(transaction.BankAccountId);
         transaction.TransactionType = await _dbContext.transactiontypes.FindAsync(transaction.TransactionTypeId);
-        
+
         if (transaction.TransactionType.Type.ToString().ToLower() == "withdraw")
-            {
-                existingAcount.Balance -= Math.Abs(NewTransaction.TransactionAmount);
-            }
-            else
-            {
-                existingAcount.Balance += Math.Abs(NewTransaction.TransactionAmount);
-            }
+        {
+            existingAcount.Balance -= Math.Abs(NewTransaction.TransactionAmount);
+        }
+        else
+        {
+            existingAcount.Balance += Math.Abs(NewTransaction.TransactionAmount);
+        }
         /*
                 existingAccount.Balance += NewTransaction.TransactionAmount;
 
@@ -225,7 +245,32 @@ public class AccountController : ControllerBase
         return Ok(await transaction.ToListAsync());
     }
 
+    // [Authorize]
+    [HttpDelete("delete/{number}")]
+    public async Task<IActionResult> DeleteAccount(string number)
+    {
+        BankAccount? existingAcount = null;
+        if (number.All(char.IsDigit))
+        {
+            existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.BankNumber == number);
+        }
+        else 
+        {
+            existingAcount = await _dbContext.bankaccount.FirstOrDefaultAsync(a => a.HolderName == number);
+        }
 
+        var id = existingAcount?.Id;
+        if (existingAcount == null)
+        {
+            return NotFound();
+        }
+        await _dbContext.bankaccount
+            .Where(a => a.Id == id)
+            .ExecuteDeleteAsync();
+
+        return NoContent();
+
+    }
 
 
     // public static async Task<string> GenerateAccountNumber(BankAccountContext db)
