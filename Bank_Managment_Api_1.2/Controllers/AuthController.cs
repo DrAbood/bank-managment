@@ -68,7 +68,7 @@ namespace Bank_Managment_Api_1._2.Controllers
                 });
             }
         }
-        
+
         [HttpPost("login")]
         public async Task<ActionResult> PostLogin(CreateLoginDto login)
         {
@@ -84,7 +84,7 @@ namespace Bank_Managment_Api_1._2.Controllers
             }
             var token = AuthServices.GenerateJWTToken(login.UserName);
             _logger.LogInformation($"Login {login.UserName}");
-            
+
             return Ok(new { token });
         }
         [Authorize]
@@ -93,12 +93,18 @@ namespace Bank_Managment_Api_1._2.Controllers
         {
             var jti = User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti)?.Value;
             var BlackListedToken = TokenMapping.ToEntityFromString(jti);
-            
+
             await _dbContext.tokenblacklist.AddAsync(BlackListedToken);
             await _dbContext.SaveChangesAsync();
             _logger.LogInformation("the user loggedout");
             return Ok("Token Black Listed");
         }
+        // [Authorize]
+        // [HttpPost("CheckCookies")]
+        // public Task<ActionResult> CheckCookies()
+        // {
+        //     return ;
+        // }
 
                 
     }

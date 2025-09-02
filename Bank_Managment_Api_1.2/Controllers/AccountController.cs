@@ -54,7 +54,28 @@ public class AccountController : ControllerBase
         return account.ToAccountSummaryDto();
     }
 
+    [Authorize]
+    [HttpGet("id/{name}")]
+    public string GetId(string name)
+    {
+        BankAccount? account = null;
+        if (name.All(char.IsDigit))
+        {
+            account =  _dbContext.bankaccount.FirstOrDefault(a => a.BankNumber == name);
+        }
+        else 
+        {
+            account =  _dbContext.bankaccount.FirstOrDefault(a => a.HolderName == name);
+        }
 
+    
+        // if (account == null)
+        // {
+        //     return NotFound(name);
+        // }
+        _logger.LogInformation($"getting id from the name of the accpunt {account.BankNumber}");
+        return account.BankNumber;
+    }
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<AccountDetailsDto>> PostAccount([FromBody] CreateAccountDto newAccount)

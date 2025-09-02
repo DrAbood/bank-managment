@@ -1,27 +1,5 @@
 document.addEventListener('DOMContentLoaded',function()
 {
-    // const inputs = Array.from(
-    //     document.querySelectorAll('input[name=Name],input[name=Number]')
-    // );
-    // const inputListener = e=> {
-    //     inputs
-    //         .filter(i=>i !== e.target)
-    //         .forEach(i => (i.required=!e.target.value.length));
-    // };
-    // inputs.forEach(i=>i.addEventListener('input',inputListener));
-
-//     const inputs = Array.from(
-//     document.querySelectorAll('input[name=Name], input[name=Number]')
-//   );
-
-//   const inputListener = e => {
-//     inputs
-//       .filter(i => i !== e.target)
-//       .forEach(i => (i.required = !e.target.value.length));
-//   };
-
-//   inputs.forEach(i => i.addEventListener('input', inputListener));
-
     document.getElementById("EnterDetails").addEventListener("submit",function(event)
         {
             event.stopPropagation();
@@ -33,16 +11,54 @@ document.addEventListener('DOMContentLoaded',function()
             }
             else
                 {
+                    var token = document.cookie
+                    .split(';')
+                    .find(row=>row.startsWith('access_token='))
+                    .split('=')[1];
+                    
 
-                    if (EnterDetails.Number.value == '')
-                    {
-                        
-                        window.location.href=`Details/${EnterDetails.Name.value}`;
-                    }
-                    else 
-                    {
-                        window.location.href=`Details/${EnterDetails.Number.value}`;
-                    }
+                    fetch(window.location.origin + `/Account/id/${EnterDetails.Name.value}`,
+                        {
+                            method: 'Get',
+                            headers:{
+                            'content-type':'application/json',
+                            'Authorization': `Bearer ${token}`
+                            } 
+                        })
+                        .then(res =>
+                            {
+                                if (res.status >= 500)
+                                {
+                                    window.location.href = window.location.origin +"/Errors"
+                                }
+                                else if(res.status == 401)
+                                {
+                                    alert("You Don't Have Permission ")
+                                    window.location.href = window.location.origin +"/Account/Main"
+
+                                }
+                                else if (!res.ok)
+                                {
+                                    alert("The Account Doesn't Exist")
+                                    window.location.href = window.location.origin +"/Account/Main"
+                                    return;
+                                }
+                                return res.json();
+                            })
+                            .then(data=>{
+                                const number = data
+                                if (EnterDetails.Number.value == '')
+                                {
+                                    
+                                    window.location.href=`Details/${number}`;
+                                }
+                                else 
+                                {
+                                    window.location.href=`Details/${EnterDetails.Number.value}`;
+                                }
+                            })
+
+                    
                     
                 }
         })
